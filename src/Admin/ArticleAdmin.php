@@ -47,6 +47,7 @@ class ArticleAdmin extends AbstractAdmin
                 ])
                 ->add('content', TextareaType::class, [
                     'attr' => ['class' => 'tinymce'],
+                    'required' => false,
                 ])
                 ->add('visible',CheckboxType::class, [
                     'required' => false,
@@ -56,16 +57,26 @@ class ArticleAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $datagrid): void
     {
-        $datagrid->add('name');
+        $datagrid->add('title');
     }
 
     protected function configureListFields(ListMapper $list): void
     {
-        $list->addIdentifier('name');
+        $list->addIdentifier('title');
     }
 
     protected function configureShowFields(ShowMapper $show): void
     {
-        $show->add('name');
+        $show
+                ->add('title')
+                ->add('category')
+                ->add('content','html');
+    }
+    
+    public function toString(object $object): string
+    {
+        return $object instanceof Article
+            ? $object->getTitle()
+            : 'Статья';
     }
 }

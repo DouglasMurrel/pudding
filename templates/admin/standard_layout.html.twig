@@ -1,0 +1,13 @@
+{% extends '@SonataAdmin/standard_layout.html.twig' %}
+
+{% block side_bar_after_nav_content %}
+    <ul class="sidebar-menu">
+        <li class=active">
+            {% if app.user %}
+            <a href="{{ path('admin_logout') }}">{{ 'Logout' | trans }}</a>
+            {% else %}
+            <a href="{{ path('admin_login') }}">{{ 'Login' | trans }}</a>
+            {% endif %}
+        </li>
+    </ul>
+{% endblock %}

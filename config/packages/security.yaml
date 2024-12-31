@@ -24,9 +24,9 @@ security:
                 login_path: admin_login
                 check_path: admin_login
                 enable_csrf: true
+                default_target_path: sonata_admin_redirect
             logout:
                 path: admin_logout
-                # where to redirect after logout
                 target: admin_login
             remember_me:
                 lifetime: 60480000

@@ -145,4 +145,9 @@ class Category
         $result = $result.$this->name;
         return $result;
     }
+    
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
 }

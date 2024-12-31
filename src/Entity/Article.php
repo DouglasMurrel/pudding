@@ -105,7 +105,9 @@ class Article
 
     public function setCategory(?Category $category): static
     {
-        $this->category->removeArticle($this);
+        if ($this->category) {
+            $this->category->removeArticle($this);
+        }
         $this->category = $category;
 
         return $this;

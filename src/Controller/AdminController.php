@@ -4,10 +4,15 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\HttpKernel\KernelInterface;
+
 
 #[Route('/admin', name: 'admin_')]
 class AdminController extends AbstractController
@@ -35,5 +40,18 @@ class AdminController extends AbstractController
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
+    
+    #[Route(path: '/upload', name: 'upload')]
+    public function upload(Request $request, KernelInterface $kernel)
+    {
+        /** @var UploadedFile $file */
+        $file = $request->files->get('file');
+        $filename = $file->getClientOriginalName();
+        $content = $file->getContent();
+        $dir = $kernel->getProjectDir() . '/public/img/';
+        file_put_contents($dir . $filename, $content);
+        $data = ['location'=>'/img/' . $filename];
+        return $this->json($data);
     }
 }

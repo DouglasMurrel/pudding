@@ -9,7 +9,9 @@ sonata_admin:
     options:
         default_admin_route: 'edit'
     templates:
+        layout: 'admin/standard_layout.html.twig'
         edit: 'admin/edit.html.twig'
+    search: false
 
 sonata_block:
     blocks:
