@@ -1,0 +1,18 @@
+{% extends '@SonataAdmin/CRUD/edit.html.twig' %}
+
+{% block javascripts %}
+    <script src="/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      tinymce.init({
+        selector: '.tinymce',
+        license_key: 'gpl',
+        language: 'ru',
+        plugins : "table,media,autolink,link,lists,imageupload,autoresize",
+        toolbar : [
+            "bold italic underline strikethrough blocks align forecolor backcolor removeformat | bullist numlist undo redo link unlink imageupload",
+        ],
+        menubar: 'table',
+      });
+    </script>
+    {{ parent() }}
+{% endblock %}
