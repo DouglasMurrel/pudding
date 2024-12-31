@@ -23,7 +23,7 @@ security:
             form_login:
                 login_path: admin_login
                 check_path: admin_login
-                enable_csrf: true
+                enable_csrf: false
                 default_target_path: sonata_admin_redirect
             logout:
                 path: admin_logout
