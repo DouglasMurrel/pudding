@@ -38,3 +38,17 @@ services:
         class: App\EventListener\CreateArticleListener
         tags:
             - { name: kernel.event_listener, event: sonata.admin.event.persistence.pre_persist, method: setDateTime }
+            
+    security.csrf.same_origin_token_manager:
+        class: App\Security\CSRF\MyTokenManager
+        decorates: security.csrf.token_manager
+        arguments:
+          - '@request_stack'
+          - '@logger'
+          - '@.inner'
+#          - !abstract 'framework.csrf_protection.stateless_token_ids'
+#          - !abstract 'framework.csrf_protection.check_header'
+#          - !abstract 'framework.csrf_protection.cookie_name'
+        tags:
+          - { name: monolog.logger, channel: 'request' }
+          - { name: kernel.event_listener, event: 'kernel.response', method: 'onKernelResponse' }
