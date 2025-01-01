@@ -185,8 +185,6 @@ class MyTokenManager implements CsrfTokenManagerInterface
     {
         $source = $request->headers->get('Origin') ?? $request->headers->get('Referer') ?? 'null';
         
-        $this->logger?->debug('My Token Manager');
-
         return 'null' === $source ? null : str_starts_with(str_replace('https://','http://',$source).'/', $request->getSchemeAndHttpHost().'/');
     }
 
