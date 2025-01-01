@@ -29,9 +29,10 @@ class ArticleAdmin extends AbstractAdmin
     {
         $form
                 ->add('slug', TextType::class,[
+                    'required' => false,
                     'constraints'=>[
                         new Regex([
-                            'pattern'=>'/^[a-zA-Z0-9_\-]+$/',
+                            'pattern'=>'/^[a-zA-Z0-9_\-]*$/',
                             'message'=>'Допустимы тоько английские буквы, цифры, дефис и символ подчеркивания'
                         ])
                     ]

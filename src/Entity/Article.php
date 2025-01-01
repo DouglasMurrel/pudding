@@ -17,8 +17,8 @@ class Article
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $slug = null;
+    #[ORM\Column(length: 255, options: ["default" => ""])]
+    private ?string $slug = '';
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
