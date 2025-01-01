@@ -8,10 +8,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
-class MyTokenManager extends SameOriginCsrfTokenManager
-{
-final class SameOriginCsrfTokenManager implements CsrfTokenManagerInterface
+class MyTokenManager implements CsrfTokenManagerInterface
 {
     public const TOKEN_MIN_LENGTH = 24;
 
