@@ -55,8 +55,9 @@ class Article
         return $this->slug;
     }
 
-    public function setSlug(string $slug): static
+    public function setSlug(?string $slug): static
     {
+        if (!$slug) $slug='';
         $this->slug = $slug;
 
         return $this;
