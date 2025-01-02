@@ -40,7 +40,7 @@ class MainController extends AbstractController
         /** @var Article $curArticle */
         $curArticle = $article;
         $root = $article->getRoot();
-        while ($curArticle != $root) {
+        while ($curArticle != null) {
             if ($curArticle->isVisible()) {
                 $links[] = [
                     'title' => $curArticle->getTitle(),
