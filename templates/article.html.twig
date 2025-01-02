@@ -28,10 +28,12 @@
     {% if (article.showChildren) %}
     <div>
         {% for childArticle in article.children %}
-            {% if childArticle.slug=='' %}
-            <div><a href="{{ path('main') }}">{{ childArticle.title }}</a></div>
-            {% else %}
-            <div><a href="{{ path('main_slug', {slug: childArticle.slug}) }}">{{ childArticle.title }}</a></div>
+            {% if childArticle.isVisible %}
+                {% if childArticle.slug=='' %}
+                    <div><a href="{{ path('main') }}">{{ childArticle.title }}</a></div>
+                    {% else %}
+                    <div><a href="{{ path('main_slug', {slug: childArticle.slug}) }}">{{ childArticle.title }}</a></div>
+                {% endif %}
             {% endif %}
         {% endfor %}
     </div>
