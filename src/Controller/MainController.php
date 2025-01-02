@@ -33,20 +33,22 @@ class MainController extends AbstractController
         }
         /** @var Article $article */
         $article = $this->em->getRepository(Article::class)->findOneBy(['slug'=>$slug]);
-        if (!$article) {
-            return new Response('Not found', Response::HTTP_NOT_FOUND);
+        if (!$article || !$article->isVisible()) {
+        return $this->render('NotFound.html.twig');
         }
         $links = [];
         /** @var Article $curArticle */
         $curArticle = $article;
         $root = $article->getRoot();
         while ($curArticle != $root) {
-            $links[] = [
-                'title' => $curArticle->getTitle(),
-                'link' => $curArticle->getSlug() ? 
-                    $this->generateUrl('main_slug',['slug'=>$curArticle->getSlug()]) : 
-                    $this->generateUrl('main') 
-            ];
+            if ($curArticle->isVisible()) {
+                $links[] = [
+                    'title' => $curArticle->getTitle(),
+                    'link' => $curArticle->getSlug() ?
+                    $this->generateUrl('main_slug', ['slug' => $curArticle->getSlug()]) :
+                    $this->generateUrl('main')
+                ];
+            }
             $curArticle = $curArticle->getParent();
         }
         return $this->render('article.html.twig',[
