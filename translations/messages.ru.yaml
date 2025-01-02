@@ -1,14 +1,14 @@
 Name: Имя
 Slug: Уникальный идентификатор для ссылок
-Parent: Родительская статья
-Article: Статья
+Parent: Родительская страница
+Article: Страница
 Title: Заголовок
 Visible: Показывать
-Article List: Список статей
-Article Create: Создать статью
-Content: Текст статьи
+Article List: Список страниц
+Article Create: Создать страницу
+Content: Текст страницы
 Logout: Выйти
 Login: Войти
 Show Title: Показывать заголовок
-Show Children: Показывать список дочерних статей
+Show Children: Показывать список дочерних страниц
 Show Breadcrumbs: Показывать 'хлебные крошки'
