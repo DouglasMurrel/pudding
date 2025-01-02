@@ -1,9 +1,6 @@
-Category: Категория
 Name: Имя
-Category List: Список категорий
-Category Create: Создать категорию
 Slug: Уникальный идентификатор для ссылок
-Parent: Родительская категория
+Parent: Родительская статья
 Article: Статья
 Title: Заголовок
 Visible: Показывать

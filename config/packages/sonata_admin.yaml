@@ -11,6 +11,7 @@ sonata_admin:
     templates:
         layout: 'admin/standard_layout.html.twig'
         edit: 'admin/edit.html.twig'
+        list: 'admin/list.html.twig'
     search: false
 
 sonata_block:

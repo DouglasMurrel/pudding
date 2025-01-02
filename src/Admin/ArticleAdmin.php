@@ -2,7 +2,7 @@
 
 namespace App\Admin;
 
-use App\Entity\Category;
+use App\Entity\Article;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -38,14 +38,6 @@ class ArticleAdmin extends AbstractAdmin
                     ]
                 ])
                 ->add('title', TextType::class)
-                ->add('category', ModelType::class, [
-                    'property' => 'spacedName',
-                    'query' => $this->em->createQueryBuilder()
-                        ->select('c')
-                        ->from(Category::class, 'c')
-                        ->orderBy('c.lft')
-                        ->getQuery()
-                ])
                 ->add('content', TextareaType::class, [
                     'attr' => ['class' => 'tinymce'],
                     'required' => false,
@@ -53,24 +45,34 @@ class ArticleAdmin extends AbstractAdmin
                 ->add('visible',CheckboxType::class, [
                     'required' => false,
                 ])
+                ->add('parent', ModelType::class, [
+                    'property' => 'spacedName',
+                    'query' => $this->em->createQueryBuilder()
+                        ->select('c')
+                        ->from(Article::class, 'c')
+                        ->orderBy('c.lft')
+                        ->getQuery()
+                ])
                 ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagrid): void
     {
-        $datagrid->add('title');
     }
 
     protected function configureListFields(ListMapper $list): void
     {
-        $list->addIdentifier('title');
+        $list
+                ->addIdentifier('title')
+                ->addIdentifier('parent')
+        ;
     }
 
     protected function configureShowFields(ShowMapper $show): void
     {
         $show
                 ->add('title')
-                ->add('category')
+                ->add('parent')
                 ->add('content','html');
     }
     

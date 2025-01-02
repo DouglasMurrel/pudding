@@ -2,11 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\ArticleRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 
-#[ORM\Entity(repositoryClass: ArticleRepository::class)]
+#[Gedmo\Tree(type: 'nested')]
+#[ORM\Table(name: 'article')]
+#[ORM\Entity(repositoryClass: NestedTreeRepository::class)]
 class Article
 {
     #[ORM\Id]
@@ -20,7 +23,7 @@ class Article
     #[ORM\Column(length: 255, options: ["default" => ""])]
     private ?string $slug = '';
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -28,10 +31,32 @@ class Article
 
     #[ORM\Column]
     private ?bool $visible = true;
+    
+    #[Gedmo\TreeLeft]
+    #[ORM\Column(name: 'lft', type: Types::INTEGER)]
+    private $lft;
 
-    #[ORM\ManyToOne(inversedBy: 'articles')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Category $category = null;
+    #[Gedmo\TreeLevel]
+    #[ORM\Column(name: 'lvl', type: Types::INTEGER)]
+    private $lvl;
+
+    #[Gedmo\TreeRight]
+    #[ORM\Column(name: 'rgt', type: Types::INTEGER)]
+    private $rgt;
+    
+    #[Gedmo\TreeRoot]
+    #[ORM\ManyToOne(targetEntity: Article::class)]
+    #[ORM\JoinColumn(name: 'tree_root', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    private $root;
+    
+    #[Gedmo\TreeParent]
+    #[ORM\ManyToOne(targetEntity: Article::class, inversedBy: 'children')]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    private $parent;
+    
+    #[ORM\OneToMany(targetEntity: Article::class, mappedBy: 'parent')]
+    #[ORM\OrderBy(['lft' => 'ASC'])]
+    private $children;
 
     public function getId(): ?int
     {
@@ -99,18 +124,31 @@ class Article
         return $this;
     }
 
-    public function getCategory(): ?Category
+    public function getRoot(): ?self
     {
-        return $this->category;
+        return $this->root;
     }
 
-    public function setCategory(?Category $category): static
+    public function setParent(self $parent = null): void
     {
-        if ($this->category) {
-            $this->category->removeArticle($this);
-        }
-        $this->category = $category;
+        $this->parent = $parent;
+    }
 
-        return $this;
+    public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+    
+    public function getSpacedName(): string
+    {
+        $result = '';
+        for($i=0;$i<$this->lvl;$i++) $result = "->".$result;
+        $result = $result.$this->title;
+        return $result;
+    }
+    
+    public function __toString(): string
+    {
+        return $this->getTitle();
     }
 }
