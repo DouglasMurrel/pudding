@@ -32,6 +32,15 @@ class Article
     #[ORM\Column]
     private ?bool $visible = true;
     
+    #[ORM\Column]
+    private ?bool $showTitle = true;
+    
+    #[ORM\Column]
+    private ?bool $showChildren = true;
+    
+    #[ORM\Column]
+    private ?bool $showBreadcrumbs = true;
+    
     #[Gedmo\TreeLeft]
     #[ORM\Column(name: 'lft', type: Types::INTEGER)]
     private $lft;
@@ -123,6 +132,36 @@ class Article
 
         return $this;
     }
+    
+    public function getShowTitle(): ?bool {
+        return $this->showTitle;
+    }
+
+    public function getShowChildren(): ?bool {
+        return $this->showChildren;
+    }
+
+    public function setShowTitle(?bool $showTitle): static 
+    {
+        $this->showTitle = $showTitle;
+
+        return $this;
+    }
+
+    public function setShowChildren(?bool $showChildren): static 
+    {
+        $this->showChildren = $showChildren;
+
+        return $this;
+    }
+
+    public function getShowBreadcrumbs(): ?bool {
+        return $this->showBreadcrumbs;
+    }
+
+    public function setShowBreadcrumbs(?bool $showBreadcrumbs): void {
+        $this->showBreadcrumbs = $showBreadcrumbs;
+    }
 
     public function getRoot(): ?self
     {
@@ -139,6 +178,10 @@ class Article
         return $this->parent;
     }
     
+    public function getChildren() {
+        return $this->children;
+    }
+
     public function getSpacedName(): string
     {
         $result = '';

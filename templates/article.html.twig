@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{  article.title }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% if (article.showBreadcrumbs) %}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+    {% for link in links|reverse %}
+        {% if not loop.last %}
+            <li class="breadcrumb-item"><a href="{{ link.link }}">{{ link.title }}</a></li>
+        {% else %}
+            <li class="breadcrumb-item">{{ link.title }}</li>
+        {% endif %}
+    {% endfor %}
+        </ol>
+    </nav>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if (article.showTitle) %}
+    <h2>{{ article.title }}</h2>
+    {% endif %}
+    <div>
+        {{ article.content | raw }}
+    </div>
+    {% if (article.showChildren) %}
+    <div>
+        {% for childArticle in article.children %}
+            {% if childArticle.slug=='' %}
+            <div><a href="{{ path('main') }}">{{ childArticle.title }}</a></div>
+            {% else %}
+            <div><a href="{{ path('main_slug', {slug: childArticle.slug}) }}">{{ childArticle.title }}</a></div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}

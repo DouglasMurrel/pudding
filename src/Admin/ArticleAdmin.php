@@ -45,6 +45,15 @@ class ArticleAdmin extends AbstractAdmin
                 ->add('visible',CheckboxType::class, [
                     'required' => false,
                 ])
+                ->add('showTitle',CheckboxType::class, [
+                    'required' => false,
+                ])
+                ->add('showChildren',CheckboxType::class, [
+                    'required' => false,
+                ])
+                ->add('showBreadcrumbs',CheckboxType::class, [
+                    'required' => false,
+                ])
                 ->add('parent', ModelType::class, [
                     'property' => 'spacedName',
                     'query' => $this->em->createQueryBuilder()

@@ -9,3 +9,6 @@ Article Create: Создать статью
 Content: Текст статьи
 Logout: Выйти
 Login: Войти
+Show Title: Показывать заголовок
+Show Children: Показывать список дочерних статей
+Show Breadcrumbs: Показывать 'хлебные крошки'
