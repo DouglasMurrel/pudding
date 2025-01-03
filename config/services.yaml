@@ -30,9 +30,10 @@ services:
             - { name: sonata.admin, model_class: App\Entity\Article, manager_type: orm, label: Article }
             
     pudding.event.article_create_listener:
-        class: App\EventListener\CreateArticleListener
+        class: App\EventListener\ArticleListener
         tags:
             - { name: kernel.event_listener, event: sonata.admin.event.persistence.pre_persist, method: setDateTime }
+            - { name: doctrine.event_listener, event: onFlush, method: onFlush }
             
     security.csrf.same_origin_token_manager:
         class: App\Security\CSRF\MyTokenManager

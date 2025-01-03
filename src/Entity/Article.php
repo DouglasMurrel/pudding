@@ -181,6 +181,14 @@ class Article
     public function getChildren() {
         return $this->children;
     }
+    
+    public function getLft() {
+        return $this->lft;
+    }
+
+    public function getRgt() {
+        return $this->rgt;
+    }
 
     public function getSpacedName(): string
     {
