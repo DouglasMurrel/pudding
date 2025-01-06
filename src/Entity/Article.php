@@ -41,6 +41,9 @@ class Article
     #[ORM\Column]
     private ?bool $showBreadcrumbs = true;
     
+    #[ORM\Column (options: ["default" => false])]
+    private ?bool $hideInPageList = false;
+    
     #[Gedmo\TreeLeft]
     #[ORM\Column(name: 'lft', type: Types::INTEGER)]
     private $lft;
@@ -162,6 +165,14 @@ class Article
     public function setShowBreadcrumbs(?bool $showBreadcrumbs): void {
         $this->showBreadcrumbs = $showBreadcrumbs;
     }
+    
+    public function getHideInPageList(): ?bool {
+        return $this->hideInPageList;
+    }
+
+    public function setHideInPageList(?bool $hideInPageList): void {
+        $this->hideInPageList = $hideInPageList;
+    }
 
     public function getRoot(): ?self
     {
@@ -189,7 +200,7 @@ class Article
     public function getRgt() {
         return $this->rgt;
     }
-
+    
     public function getSpacedName(): string
     {
         $result = '';
