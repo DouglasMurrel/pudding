@@ -48,3 +48,8 @@ services:
         tags:
           - { name: monolog.logger, channel: 'request' }
           - { name: kernel.event_listener, event: 'kernel.response', method: 'onKernelResponse' }
+          
+    pudding.event.new_order_mail_listener:
+        class: App\EventListener\NewOrderMailListener
+        tags:
+            - { name: kernel.event_listener, event: App\Event\NewOrderEvent, method: sendOrderEmail }

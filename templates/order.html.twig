@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
+
+{% block title %}Заявка{% endblock %}
+{% block breadcrumbs %}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Пудинг с омелой</a></li>
+            <li class="breadcrumb-item">Заявка</li>
+        </ol>
+    </nav>
+{% endblock %}
+{% block content %}
+    <div class="preface">
+        <div>Пункты, обязательные для заполнения, отмечены звёздочкой. Если вам нечего ответить на какой-то вопрос из числа обязательных, поставьте короткое слово «нет».</div>
+        <div>Перед тем, как заполнять пункт «Желаемая роль», рекомендуется прочесть <a href="/roles">Список ролей</a></div>
+        <div>Мастерская группа оставляет за собой право отклонить заявку без объяснения причин.</div>
+    </div>
+{{ form(form) }}
+{% endblock %}
