@@ -21,13 +21,11 @@ class NewOrderMailListener {
         $this->logger = $logger;
     }
     
-    public function sendOrderEmail(NewOrderEvent $event)
-    {
+    public function sendOrderEmail(NewOrderEvent $event) {
+        $list = ['murrel@yandex.ru', 'alestein@yandex.ru', 'arta-ksenia@yandex.ru'];
         $email = (new TemplatedEmail())
                 ->from('Пудинг <murrel@yandex.ru>')
-                ->to('murrel@yandex.ru')
-                ->to('alestein@yandex.ru')
-                ->to('arta-ksenia@yandex.ru')
+                ->to(...$list)
                 ->subject('Заявка на Пудинг с омелой')
                 ->htmlTemplate('email/order.html.twig')
                 ->context([
@@ -37,5 +35,4 @@ class NewOrderMailListener {
 
         $this->mailer->send($email);
     }
-    
 }
