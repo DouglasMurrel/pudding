@@ -28,7 +28,7 @@ class SendMailCommand extends Command {
         $orders = $this->em->createQueryBuilder()
                 ->select('c')
                 ->from(CharacterOrder::class, 'c')
-                ->where('c.id<6')
+                ->where('c.id<=6')
                 ->getQuery()
                 ->getResult()
         ;
