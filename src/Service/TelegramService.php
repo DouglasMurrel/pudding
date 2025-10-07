@@ -16,12 +16,15 @@ class TelegramService {
     public function sendMessage($message)
     {
         $token = $this->parameterBag->get('telegram_api_token');
-        $chatId = $this->parameterBag->get('telegram_chat_id');
-        $this->client->request('POST', 'https://api.telegram.org/bot' . $token . '/sendMessage', [
-            'json' => [
-                'chat_id' => $chatId,
-                'text' => $message,
-            ]
-        ]);
+        $chatIds = $this->parameterBag->get('telegram_chat_id');
+        $chatIdArray = explode(',', $chatIds);
+        foreach ($chatIdArray as $chatId) {
+            $this->client->request('POST', 'https://api.telegram.org/bot' . $token . '/sendMessage', [
+                'json' => [
+                    'chat_id' => $chatId,
+                    'text' => $message,
+                ]
+            ]);
+        }
     }
 }
