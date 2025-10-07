@@ -17,7 +17,7 @@ class NewOrderTelegramListener {
     }
     
     public function sendOrderTelegram(NewOrderEvent $event) {
-        $message = $this->templating->render('telegram/order.html.twig',[
+        $message = $this->templating->render('telegram/new_order.html.twig',[
             'order' => $event->getOrder()
         ]);
         $chatIds = $this->parameterBag->get('telegram_chat_id');
