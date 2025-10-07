@@ -33,6 +33,8 @@ class TelegramController extends AbstractController
             $resultText = $this->render('telegram/order_list.html.twig', [
                 'orders' => $orders
             ])->getContent();
+        } else if ($text == "/abrakadabra") {
+            $resultText = $chatId;
         } else if (preg_match('/\/order (\d+)/', $text, $m)) {
             $id = $m[1];
             $order = $this->em->getRepository(CharacterOrder::class)->find($id);
