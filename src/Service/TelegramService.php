@@ -13,10 +13,9 @@ class TelegramService {
     ) {
     }
     
-    public function sendMessage($message)
+    public function sendMessage($message, $chatId)
     {
         $token = $this->parameterBag->get('telegram_api_token');
-        $chatId = $this->parameterBag->get('telegram_chat_id');
         $this->client->request('POST', 'https://api.telegram.org/bot' . $token . '/sendMessage', [
             'json' => [
                 'chat_id' => $chatId,

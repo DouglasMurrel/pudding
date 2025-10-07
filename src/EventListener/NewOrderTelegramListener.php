@@ -5,12 +5,14 @@ namespace App\EventListener;
 use App\Event\NewOrderEvent;
 use App\Service\TelegramService;
 use Twig\Environment as Twig;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class NewOrderTelegramListener {
     
     public function __construct(
             private TelegramService $telegramService,
-            private Twig $templating
+            private Twig $templating,
+            private ParameterBagInterface $parameterBag
     ) {
     }
     
@@ -18,6 +20,10 @@ class NewOrderTelegramListener {
         $message = $this->templating->render('telegram/order.html.twig',[
             'order' => $event->getOrder()
         ]);
-        $this->telegramService->sendMessage($message);
+        $chatIds = $this->parameterBag->get('telegram_chat_id');
+        $chatIdArray = explode(',', $chatIds);
+        foreach ($chatIdArray as $chatId) {
+            $this->telegramService->sendMessage($message, $chatId);
+        }
     }
 }
