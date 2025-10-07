@@ -29,7 +29,7 @@ class TelegramController extends AbstractController
         $chatId = $message->message->chat->id;
         $text = $message->message->text;
         if ($text == "/list") {
-            $orders = $this->em->getRepository(CharacterOrder::classe)->findBy([], ['id'=>'DESC']);
+            $orders = $this->em->getRepository(CharacterOrder::class)->findBy([], ['id'=>'DESC']);
             $text = $this->render('telegram/order_list.html.twig', [
                 'orders' => $orders
             ]);
