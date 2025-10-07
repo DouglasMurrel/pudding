@@ -30,12 +30,23 @@ class TelegramController extends AbstractController
         $text = $message->message->text;
         if ($text == "/list") {
             $orders = $this->em->getRepository(CharacterOrder::class)->findBy([], ['id'=>'DESC']);
-            $text = $this->render('telegram/order_list.html.twig', [
+            $resultText = $this->render('telegram/order_list.html.twig', [
                 'orders' => $orders
-            ]);
+            ])->getContent();
+        } else if (preg_match('/\/order (\d+)/', $text, $m)) {
+            $order = $this->em->getRepository(CharacterOrder::class)->find($m[0]);
+            if (!order) {
+                $resultText = 'Заявка с id=' . $m[0] . 'не найдена';
+            } else {
+                $resultText = $this->render('telegram/order.html.twig', [
+                            'order' => $order
+                        ])->getContent();
+            }
+        } else {
+            $resultText = $this->render('telegram/help.html.twig')->getContent();
         }
         
-        $this->telegramSerice->sendMessage($text, $chatId);
+        $this->telegramSerice->sendMessage($resultText, $chatId);
 
         return new Response('OK');
     }
