@@ -26,9 +26,13 @@ class TelegramController extends AbstractController
     public function webhook(Request $request): Response
     {
         $message = json_decode($request->getContent());
+        $allowedChatIds = $this->get('TELEGRAM_CHAT_ID');
         $chatId = $message->message->chat->id;
+        $allowed = in_array($chatId, $allowedChatIds);
         $text = $message->message->text;
-        if ($text == "/list") {
+        if ($text != "/abrakadabra" && !$allowed) {
+            $resultText = 'You are not prepared!';
+        } else if ($text == "/list") {
             $orders = $this->em->getRepository(CharacterOrder::class)->findBy([], ['id'=>'DESC']);
             $resultText = $this->render('telegram/order_list.html.twig', [
                 'orders' => $orders
