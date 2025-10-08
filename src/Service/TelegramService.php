@@ -13,18 +13,13 @@ class TelegramService {
     ) {
     }
     
-    public function sendMessage($message, $chatId)
-    {
+    public function sendMessage($message, $chatId) {
         $token = $this->parameterBag->get('telegram_api_token');
-        $chatIds = $this->parameterBag->get('telegram_chat_id');
-        $chatIdArray = explode(',', $chatIds);
-        foreach ($chatIdArray as $chatId) {
-            $this->client->request('POST', 'https://api.telegram.org/bot' . $token . '/sendMessage', [
-                'json' => [
-                    'chat_id' => $chatId,
-                    'text' => $message,
-                ]
-            ]);
-        }
+        $this->client->request('POST', 'https://api.telegram.org/bot' . $token . '/sendMessage', [
+            'json' => [
+                'chat_id' => $chatId,
+                'text' => $message,
+            ]
+        ]);
     }
 }
